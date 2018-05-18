@@ -1,5 +1,7 @@
 package problem;
 
+import java.util.ArrayList;
+
 public class Action {
 	
 	//This class provides methods to generate neighbours from a State
@@ -22,6 +24,18 @@ public class Action {
 			}
 		}
 		return neighbour;
+	}
+	
+	public ArrayList<Action> availableActions(State state){
+		ArrayList<Action> availableActions = new ArrayList<>();
+		for (int queen = 0; queen < state.getQueensNumber(); queen ++) {
+			for(int line = 0; line < state.getQueensNumber(); queen ++) {
+				if(line != state.getQueenPosition(queen)) {
+					availableActions.add(new Action(queen, line));
+				}
+			}
+		}
+		return availableActions;
 	}
 	
 
