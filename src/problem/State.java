@@ -1,8 +1,9 @@
 package problem;
 
 import java.util.Arrays;
+import java.util.Random;
 
-public class State {
+public class State implements Comparable<State> {
 
 	private int[] queensPositions;
 	private int queensNumber;
@@ -59,17 +60,35 @@ public class State {
 		int conflicts = 0;
 		for (int queenToCheck = 0; queenToCheck < queensNumber; queenToCheck++) {
 			if (queenToCheck != queen) {
-				if (getQueenPosition(queen) - getQueenPosition(queenToCheck) == queen - queenToCheck) {
+				if (Math.abs(getQueenPosition(queen) - getQueenPosition(queenToCheck)) == Math.abs(queen - queenToCheck)) {
 					conflicts++;
 				}
 			}
 		}
 		return conflicts;
 	}
+	
+	public void randomInit() {
+		Random rd = new Random();
+		for (int queen = 0; queen < queensNumber; queen ++) {
+			setQueenPosition(queen, rd.nextInt(queensNumber));
+		}
+	}
 
 	@Override
 	public String toString() {
 		return Arrays.toString(queensPositions);
+	}
+
+	@Override
+	public int compareTo(State o) {
+		if(cost() < o.cost()) {
+			return -1;
+		}
+		if (cost() > o.cost()) {
+			return 1;
+		}
+		return 0;
 	}
 	
 	

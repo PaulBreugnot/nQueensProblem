@@ -26,10 +26,10 @@ public class Action {
 		return neighbour;
 	}
 	
-	public ArrayList<Action> availableActions(State state){
+	public static ArrayList<Action> availableActions(State state){
 		ArrayList<Action> availableActions = new ArrayList<>();
 		for (int queen = 0; queen < state.getQueensNumber(); queen ++) {
-			for(int line = 0; line < state.getQueensNumber(); queen ++) {
+			for(int line = 0; line < state.getQueensNumber(); line ++) {
 				if(line != state.getQueenPosition(queen)) {
 					availableActions.add(new Action(queen, line));
 				}
