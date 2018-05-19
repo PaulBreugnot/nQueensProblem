@@ -90,6 +90,33 @@ public class State implements Comparable<State> {
 		}
 		return 0;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + queensNumber;
+		result = prime * result + Arrays.hashCode(queensPositions);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		State other = (State) obj;
+		if (queensNumber != other.queensNumber)
+			return false;
+		if (!Arrays.equals(queensPositions, other.queensPositions))
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 }
