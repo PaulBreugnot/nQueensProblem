@@ -1,10 +1,8 @@
 package solver;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.PriorityQueue;
 
 import problem.State;
 import util.Pair;
@@ -13,14 +11,18 @@ public class GeneticAlgorithm implements Solver {
 	
 	private int populationSize;
 	private double mu;
-	private TreeSet<State> population;
+	private PriorityQueue<State> population;
 	private int stepMax;
 
-	public GeneticAlgorithm(int populationSize, double mu, TreeSet<State> population, int stepMax) {
+	public GeneticAlgorithm(int populationSize, double mu, PriorityQueue<State> population, int stepMax) {
 		this.populationSize = populationSize;
 		this.mu = mu;
 		this.population = population;
 		this.stepMax = stepMax;
+	}
+	
+	public GeneticAlgorithm(int queenNumber, int populationSize, double mu, int stepMax) {
+		this(populationSize, mu, initRandomPopulation(queenNumber, populationSize), stepMax);
 	}
 
 	@Override
@@ -39,8 +41,9 @@ public class GeneticAlgorithm implements Solver {
 				population.add(children.getSecond());
 			}
 			selection();
+			step++;
 		}
-		return null;
+		return population.peek();
 	}
 	
 	private Pair<State, State> crossover (Pair<State, State> pair) {
@@ -95,13 +98,23 @@ public class GeneticAlgorithm implements Solver {
 	
 	private void selection() {
 		//Minimum cost selection
-		TreeSet<State> newPopulation = new TreeSet<>();
-		Iterator<State> it = population.iterator();
+		PriorityQueue<State> newPopulation = new PriorityQueue<>();
 		for(int i = 0; i < populationSize; i++) {
-			newPopulation.add(it.next());
+			//Adding the State with least costs
+			newPopulation.add(population.poll());
 		}
 		population.clear();
 		population.addAll(newPopulation);
+	}
+	
+	private static PriorityQueue<State> initRandomPopulation(int queenNumber, int populationSize) {
+		PriorityQueue<State> population = new PriorityQueue<>();
+		for (int i = 0; i < populationSize; i++) {
+			State state = new State(queenNumber);
+			state.randomInit();
+			population.add(state);
+		}
+		return population;
 	}
 
 }
