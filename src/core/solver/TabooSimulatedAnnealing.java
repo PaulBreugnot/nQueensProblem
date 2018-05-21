@@ -9,26 +9,35 @@ import core.problem.State;
 
 public class TabooSimulatedAnnealing implements Solver {
 	
-	private static final int defaultTlimite = 100;
-	private static final int defaultHistoricSize = 30;
-
-	private int Tlimite;
+	private int historicSize;
+	private int MaxIteration;
+	
 	private ArrayBlockingQueue<State> historic;
 	
 	public TabooSimulatedAnnealing () {
-		this(defaultTlimite, defaultHistoricSize);
+		this(defaultMaxIteration, defaultHistoricSize);
 	}
 
-	public TabooSimulatedAnnealing(int Tlimite, int historicSize) {
-		this.Tlimite = Tlimite;
-		historic = new ArrayBlockingQueue<State>(historicSize);
+	public TabooSimulatedAnnealing(int MaxIteration, int historicSize) {
+		this.MaxIteration = MaxIteration;
+		this.historicSize = historicSize;
+	}
+	
+
+	public void setHistoricSize(int historicSize) {
+		this.historicSize = historicSize;
+	}
+
+	public void setMaxIteration(int MaxIteration) {
+		this.MaxIteration = MaxIteration;
 	}
 
 	@Override
 	public State solve(State initState) {
+		historic = new ArrayBlockingQueue<State>(historicSize);
 		State currentState = initState;
 		int t = 0;
-		while (t < Tlimite) {
+		while (t < MaxIteration) {
 			Random rd = new Random();
 			State randomNeighbour;
 			ArrayList<Action> actions = Action.availableActions(currentState);

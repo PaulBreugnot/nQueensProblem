@@ -8,23 +8,25 @@ import core.problem.State;
 
 public class SimulatedAnnealing implements Solver {
 
-	private static final int defaultTlimite = 100;
-	
-	private int Tlimite;
+	private int MaxIteration;
 	
 	public SimulatedAnnealing() {
-		this(defaultTlimite);
+		this(defaultMaxIteration);
 	}
 	
-	public SimulatedAnnealing(int Tlimite) {
-		this.Tlimite = Tlimite;
+	public SimulatedAnnealing(int MaxIteration) {
+		this.MaxIteration = MaxIteration;
 	}
 	
+	public void setMaxIteration(int maxIteration) {
+		MaxIteration = maxIteration;
+	}
+
 	@Override
 	public State solve(State initState) {
 		State currentState = initState;
 		int t = 0;
-		while(t < Tlimite) {
+		while(t < MaxIteration) {
 			Random rd = new Random();
 			ArrayList<Action> actions = Action.availableActions(currentState);
 			int randomIndex = rd.nextInt(actions.size());

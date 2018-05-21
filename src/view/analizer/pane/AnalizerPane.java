@@ -1,4 +1,4 @@
-package view.analizer;
+package view.analizer.pane;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 public class AnalizerPane extends VBox {
 	
 	public AnalizerPane() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/analizer/AnalizerPane.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/analizer/pane/AnalizerPane.fxml"));
 		fxmlLoader.setRoot(this);
 
 		try {

@@ -7,30 +7,37 @@ import core.problem.State;
 
 public class TabooHillClimbing implements Solver {
 	
-	private static final int defaultHistoricSize = 30;
-	private static final int defaultTlimite = 100;
-	
-	private int Tlimite;
+	private int historicSize;
+	private int MaxIteration;
 
 	private ArrayBlockingQueue<State> historic;
 	
 	public TabooHillClimbing() {
-		this(defaultTlimite, defaultHistoricSize);
+		this(defaultMaxIteration, defaultHistoricSize);
 	}
 
-	public TabooHillClimbing(int Tlimite, int historicSize) {
-		this.Tlimite = Tlimite;
-		historic = new ArrayBlockingQueue<State>(historicSize);
+	public TabooHillClimbing(int MaxIteration, int historicSize) {
+		this.MaxIteration = MaxIteration;
+		this.historicSize = historicSize;
+	}
+	
+	public void setHistoricSize(int historicSize) {
+		this.historicSize = historicSize;
+	}
+
+	public void setMaxIteration(int MaxIteration) {
+		this.MaxIteration = MaxIteration;
 	}
 
 	@Override
 	public State solve(State initState) {
+		historic = new ArrayBlockingQueue<State>(historicSize);
 		State currentState = initState;
 		int bestCost = Integer.MAX_VALUE;
 		boolean existingBetterNeighbour = true;
 
 		int t = 0;
-		while (existingBetterNeighbour && t < Tlimite) {
+		while (existingBetterNeighbour && t < MaxIteration) {
 			existingBetterNeighbour = false;
 			State bestNeighbour = null;
 			for (Action action : Action.availableActions(currentState)) {

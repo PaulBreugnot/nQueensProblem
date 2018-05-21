@@ -5,16 +5,18 @@ import core.problem.State;
 
 public class HillClimbing implements Solver {
 	
-	private static final int defaultTlimite = 100;
-	
-	private int Tlimite;
+	private int MaxIteration;
 	
 	public HillClimbing() {
-		this(defaultTlimite);
+		this(defaultMaxIteration);
 	}
 	
-	public HillClimbing(int Tlimite) {
-		this.Tlimite = Tlimite;
+	public HillClimbing(int MaxIteration) {
+		this.MaxIteration = MaxIteration;
+	}
+
+	public void setMaxIteration(int maxIteration) {
+		MaxIteration = maxIteration;
 	}
 
 	@Override
@@ -24,7 +26,7 @@ public class HillClimbing implements Solver {
 		boolean existingBetterNeighbour = true;
 
 		int t = 0;
-		while (existingBetterNeighbour && t < Tlimite) {
+		while (existingBetterNeighbour && t < MaxIteration) {
 			existingBetterNeighbour = false;
 			State bestNeighbour = null;
 			for (Action action : Action.availableActions(currentState)) {

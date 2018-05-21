@@ -17,7 +17,7 @@
 				<VBox>
 					<children>
 						<Label text="Number Of Queens :" />
-						<Spinner fx:id="sizeSpinner" />
+						<Spinner fx:id="sizeSpinner" editable="true" />
 					</children>
 					<HBox.margin>
 						<Insets bottom="10.0" left="10.0" top="5.0" />

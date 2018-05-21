@@ -10,34 +10,45 @@ import java.util.PriorityQueue;
 
 public class GeneticAlgorithm implements Solver {
 	
-	private static final int defaultPopulationSize = 10;
-	private static final double defaultMu = 0.01;
-	private static final int defaultStepMax = 100;
+	public static final int defaultPopulationSize = 10;
+	public static final double defaultMu = 0.01;
 	
 	private int populationSize;
 	private double mu;
 	private PriorityQueue<State> population;
-	private int stepMax;
+	private int maxIteration;
 
 	public GeneticAlgorithm(int queenNumber) {
-		this(queenNumber, defaultPopulationSize, defaultMu, defaultStepMax);
+		this(queenNumber, defaultPopulationSize, defaultMu, defaultMaxIteration);
 	}
 	
-	public GeneticAlgorithm(int populationSize, double mu, PriorityQueue<State> population, int stepMax) {
+	public GeneticAlgorithm(int populationSize, double mu, PriorityQueue<State> population, int maxIteration) {
 		this.populationSize = populationSize;
 		this.mu = mu;
 		this.population = population;
-		this.stepMax = stepMax;
+		this.maxIteration = maxIteration;
 	}
 	
 	public GeneticAlgorithm(int queenNumber, int populationSize, double mu, int stepMax) {
 		this(populationSize, mu, initRandomPopulation(queenNumber, populationSize), stepMax);
 	}
 
+	public void setPopulationSize(int populationSize) {
+		this.populationSize = populationSize;
+	}
+
+	public void setMu(double mu) {
+		this.mu = mu;
+	}
+
+	public void setMaxIteration(int maxIteration) {
+		this.maxIteration = maxIteration;
+	}
+
 	@Override
 	public State solve(State initState) {
 		int step = 0;
-		while(step < stepMax) {
+		while(step < maxIteration) {
 			ArrayList<Pair<State, State>> pairs = generatePairs();
 			for (Pair<State, State> pair : pairs) {
 				Pair<State, State> children = crossover(pair);
