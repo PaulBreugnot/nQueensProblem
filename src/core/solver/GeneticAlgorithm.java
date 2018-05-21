@@ -18,19 +18,14 @@ public class GeneticAlgorithm implements Solver {
 	private PriorityQueue<State> population;
 	private int maxIteration;
 
-	public GeneticAlgorithm(int queenNumber) {
-		this(queenNumber, defaultPopulationSize, defaultMu, defaultMaxIteration);
+	public GeneticAlgorithm() {
+		this(defaultPopulationSize, defaultMu, defaultMaxIteration);
 	}
 	
-	public GeneticAlgorithm(int populationSize, double mu, PriorityQueue<State> population, int maxIteration) {
+	public GeneticAlgorithm(int populationSize, double mu, int maxIteration) {
 		this.populationSize = populationSize;
 		this.mu = mu;
-		this.population = population;
 		this.maxIteration = maxIteration;
-	}
-	
-	public GeneticAlgorithm(int queenNumber, int populationSize, double mu, int stepMax) {
-		this(populationSize, mu, initRandomPopulation(queenNumber, populationSize), stepMax);
 	}
 
 	public void setPopulationSize(int populationSize) {
@@ -47,6 +42,7 @@ public class GeneticAlgorithm implements Solver {
 
 	@Override
 	public State solve(State initState) {
+		initRandomPopulation(initState.getQueensNumber(), populationSize);
 		int step = 0;
 		while(step < maxIteration) {
 			ArrayList<Pair<State, State>> pairs = generatePairs();
@@ -127,14 +123,13 @@ public class GeneticAlgorithm implements Solver {
 		population.addAll(newPopulation);
 	}
 	
-	private static PriorityQueue<State> initRandomPopulation(int queenNumber, int populationSize) {
-		PriorityQueue<State> population = new PriorityQueue<>();
+	private void initRandomPopulation(int queenNumber, int populationSize) {
+		population = new PriorityQueue<>();
 		for (int i = 0; i < populationSize; i++) {
 			State state = new State(queenNumber);
 			state.randomInit();
 			population.add(state);
 		}
-		return population;
 	}
 	
 	@Override

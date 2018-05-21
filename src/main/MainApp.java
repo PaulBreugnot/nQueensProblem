@@ -22,6 +22,8 @@ import javafx.stage.Stage;
 				loader.setLocation(MainApp.class.getResource("/view/mainView/MainView.fxml"));
 				root = (TabPane) loader.load();
 				Scene scene = new Scene(root);
+				primaryStage.setHeight(600);
+				primaryStage.setWidth(1000);
 				primaryStage.setScene(scene);
 				primaryStage.setTitle("n-queens problem");
 				primaryStage.show();

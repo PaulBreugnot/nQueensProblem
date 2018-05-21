@@ -55,7 +55,7 @@ public class Main {
 
 		// Genetic algorithm
 		System.out.println("--Genetic Algorithm--");
-		solver = new GeneticAlgorithm(4, 10, 0.01, 100);
+		solver = new GeneticAlgorithm(10, 0.01, 100);
 		solution = solver.solve(state);
 		System.out.println("Cost : " + solution.cost());
 		System.out.println("Solution : " + solution);

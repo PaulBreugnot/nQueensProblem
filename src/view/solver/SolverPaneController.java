@@ -33,6 +33,14 @@ public class SolverPaneController {
 	private ComboBox<Solver> solverComboBox;
 	@FXML
 	private Label costLabel;
+	@FXML
+	private Spinner<Integer> maxIterationSpinner;
+	@FXML
+	private Spinner<Integer> historicSizeSpinner;
+	@FXML
+	private Spinner<Integer> populationSizeSpinner;
+	@FXML
+	private Spinner<Double> muSpinner;
 
 	private double tileSize;
 	private double xOffset;
@@ -40,21 +48,30 @@ public class SolverPaneController {
 
 	private HashSet<ImageView> queens = new HashSet<>();
 	private Image queenImg = new Image("file:ressources/queen.png");
+	
+	private HillClimbing hillClimbing = new HillClimbing();
+	private TabooHillClimbing tabooHillClimbing = new TabooHillClimbing();
+	private SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing();
+	private TabooSimulatedAnnealing tabooSimulatedAnnealing = new TabooSimulatedAnnealing();
+	private GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
 
 	@FXML
 	private void initialize() {
-		setSpinner();
+		setQueenNumberSpinner();
 		setChessboardListeners();
 		setSolverComboBox();
+		setMaxIterationSpinner();
+		setHistoricSizeSpinner();
+		setPopulationSizeSpinner();
+		setMuSpinner();
 		costLabel.setText(" ");
 	}
 
-	private void setSpinner() {
+	private void setQueenNumberSpinner() {
 		sizeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(5, 100, 10));
 		sizeSpinner.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> v, Number oldVal, Number newVal) {
-				setSolverComboBox();
 				displayChessBoard((int) newVal, ChessboardPane.getWidth(), ChessboardPane.getHeight());
 			}
 		});
@@ -108,13 +125,58 @@ public class SolverPaneController {
 
 	private void setSolverComboBox() {
 		solverComboBox.getItems().clear();
-		solverComboBox.getItems().addAll(new HillClimbing(), new TabooHillClimbing(), new SimulatedAnnealing(),
-				new TabooSimulatedAnnealing(), new GeneticAlgorithm(sizeSpinner.getValue()));
+		solverComboBox.getItems().addAll(hillClimbing, tabooHillClimbing, simulatedAnnealing,
+				tabooSimulatedAnnealing, geneticAlgorithm);
 
 		solverComboBox.valueProperty().addListener(new ChangeListener<Solver>() {
 			@Override
 			public void changed(ObservableValue<? extends Solver> ov, Solver oldVal, Solver newVal) {
 				MainApp.setSolver(newVal);
+			}
+		});
+	}
+	
+	private void setMaxIterationSpinner() {
+		maxIterationSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(100, 10000, Solver.defaultMaxIteration));
+		maxIterationSpinner.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> v, Number oldVal, Number newVal) {
+				hillClimbing.setMaxIteration((int) newVal);
+				tabooHillClimbing.setMaxIteration((int) newVal);
+				simulatedAnnealing.setMaxIteration((int) newVal);
+				tabooSimulatedAnnealing.setMaxIteration((int) newVal);
+				geneticAlgorithm.setMaxIteration((int) newVal);
+			}
+		});
+	}
+	
+	private void setHistoricSizeSpinner() {
+		historicSizeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 10000, Solver.defaultHistoricSize));
+		historicSizeSpinner.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> v, Number oldVal, Number newVal) {
+				tabooHillClimbing.setHistoricSize((int) newVal);
+				tabooSimulatedAnnealing.setHistoricSize((int) newVal);
+			}
+		});
+	}
+	
+	private void setPopulationSizeSpinner() {
+		populationSizeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 1000, GeneticAlgorithm.defaultPopulationSize));
+		populationSizeSpinner.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> v, Number oldVal, Number newVal) {
+				geneticAlgorithm.setPopulationSize((int) newVal);
+			}
+		});
+	}
+	
+	private void setMuSpinner() {
+		muSpinner.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1, GeneticAlgorithm.defaultMu, 0.01));
+		muSpinner.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> v, Number oldVal, Number newVal) {
+				geneticAlgorithm.setMu((double) newVal);
 			}
 		});
 	}

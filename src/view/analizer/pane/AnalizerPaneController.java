@@ -38,7 +38,7 @@ public class AnalizerPaneController {
 	private TabooHillClimbing tabooHillClimbing = new TabooHillClimbing();
 	private SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing();
 	private TabooSimulatedAnnealing tabooSimulatedAnnealing = new TabooSimulatedAnnealing();
-	private GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(queenNumber);
+	private GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
 	
 	
 	public void setSampleSize(int sampleSize) {
