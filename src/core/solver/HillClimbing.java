@@ -18,6 +18,10 @@ public class HillClimbing implements Solver {
 	public void setMaxIteration(int maxIteration) {
 		MaxIteration = maxIteration;
 	}
+	
+	public int getMaxIteration() {
+		return MaxIteration;
+	}
 
 	@Override
 	public State solve(State initState) {

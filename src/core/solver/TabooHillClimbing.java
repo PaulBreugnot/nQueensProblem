@@ -24,6 +24,10 @@ public class TabooHillClimbing implements Solver {
 	public void setHistoricSize(int historicSize) {
 		this.historicSize = historicSize;
 	}
+	
+	public int getHistoricSize() {
+		return historicSize;
+	}
 
 	public void setMaxIteration(int MaxIteration) {
 		this.MaxIteration = MaxIteration;

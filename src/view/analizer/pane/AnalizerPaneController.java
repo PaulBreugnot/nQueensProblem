@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import view.analizer.settings.AnalizerSettingsController;
 
 public class AnalizerPaneController {
-	
+
 	@FXML
 	private BarChart<String, Number> HillClimbingChart;
 	@FXML
@@ -30,23 +30,30 @@ public class AnalizerPaneController {
 	private BarChart<String, Number> TabooSimulatedAnnealingChart;
 	@FXML
 	private BarChart<String, Number> GeneticAlgorithmChart;
-	
+
 	private int sampleSize = 100;
-	private int queenNumber= 10;
-	
+	private int queenNumber = 10;
+
 	private HillClimbing hillClimbing = new HillClimbing();
 	private TabooHillClimbing tabooHillClimbing = new TabooHillClimbing();
 	private SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing();
 	private TabooSimulatedAnnealing tabooSimulatedAnnealing = new TabooSimulatedAnnealing();
 	private GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
-	
-	
+
 	public void setSampleSize(int sampleSize) {
 		this.sampleSize = sampleSize;
+	}
+	
+	public int getSampleSize() {
+		return sampleSize;
 	}
 
 	public void setQueenNumber(int queenNumber) {
 		this.queenNumber = queenNumber;
+	}
+	
+	public int getQueenNumber() {
+		return queenNumber;
 	}
 
 	public HillClimbing getHillClimbing() {
@@ -76,9 +83,18 @@ public class AnalizerPaneController {
 		computeSimulatedAnnealingChart();
 		computeTabooSimulatedAnnealingChart();
 		computeGeneticAlgorithmChart();
-		
+
 	}
 	
+	@FXML
+	private void handleClearCharts() {
+		HillClimbingChart.getData().clear();
+		TabooHillClimbingChart.getData().clear();
+		SimulatedAnnealingChart.getData().clear();
+		TabooSimulatedAnnealingChart.getData().clear();
+		GeneticAlgorithmChart.getData().clear();
+	}
+
 	@FXML
 	private void handleSettings() {
 		Stage settingsStage = new Stage();
@@ -94,70 +110,70 @@ public class AnalizerPaneController {
 		controller.setStage(settingsStage);
 		settingsStage.show();
 	}
-	
+
 	private void computeHillClimbingChart() {
 		HistoCostAnalizer analizer = new HistoCostAnalizer(hillClimbing, queenNumber, sampleSize);
-		
+
 		TreeMap<Integer, Integer> results = analizer.analize();
-        
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        for(Integer value : results.keySet()) {
-        	series.getData().add(new XYChart.Data<String, Number>(value.toString(), results.get(value)));
-        }
-        
-        HillClimbingChart.getData().add(series);
+
+		XYChart.Series<String, Number> series = new XYChart.Series<>();
+		for (Integer value : results.keySet()) {
+			series.getData().add(new XYChart.Data<String, Number>(value.toString(), results.get(value)));
+		}
+
+		HillClimbingChart.getData().add(series);
 	}
-	
+
 	private void computeTabooHillClimbingChart() {
 		HistoCostAnalizer analizer = new HistoCostAnalizer(tabooHillClimbing, queenNumber, sampleSize);
-		
+
 		TreeMap<Integer, Integer> results = analizer.analize();
-        
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        for(Integer value : results.keySet()) {
-        	series.getData().add(new XYChart.Data<String, Number>(value.toString(), results.get(value)));
-        }
-        
-        TabooHillClimbingChart.getData().add(series);
+
+		XYChart.Series<String, Number> series = new XYChart.Series<>();
+		for (Integer value : results.keySet()) {
+			series.getData().add(new XYChart.Data<String, Number>(value.toString(), results.get(value)));
+		}
+
+		TabooHillClimbingChart.getData().add(series);
 	}
-	
+
 	private void computeSimulatedAnnealingChart() {
 		HistoCostAnalizer analizer = new HistoCostAnalizer(simulatedAnnealing, queenNumber, sampleSize);
-		
+
 		TreeMap<Integer, Integer> results = analizer.analize();
-        
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        for(Integer value : results.keySet()) {
-        	series.getData().add(new XYChart.Data<String, Number>(value.toString(), results.get(value)));
-        }
-        
-        SimulatedAnnealingChart.getData().add(series);
+
+		XYChart.Series<String, Number> series = new XYChart.Series<>();
+		for (Integer value : results.keySet()) {
+			series.getData().add(new XYChart.Data<String, Number>(value.toString(), results.get(value)));
+		}
+
+		SimulatedAnnealingChart.getData().add(series);
 	}
-	
+
 	private void computeTabooSimulatedAnnealingChart() {
 		HistoCostAnalizer analizer = new HistoCostAnalizer(tabooSimulatedAnnealing, queenNumber, sampleSize);
-		
+
 		TreeMap<Integer, Integer> results = analizer.analize();
-        
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        for(Integer value : results.keySet()) {
-        	series.getData().add(new XYChart.Data<String, Number>(value.toString(), results.get(value)));
-        }
-        
-        TabooSimulatedAnnealingChart.getData().add(series);
+
+		XYChart.Series<String, Number> series = new XYChart.Series<>();
+		for (Integer value : results.keySet()) {
+			series.getData().add(new XYChart.Data<String, Number>(value.toString(), results.get(value)));
+		}
+
+		TabooSimulatedAnnealingChart.getData().add(series);
 	}
-	
+
 	private void computeGeneticAlgorithmChart() {
 		HistoCostAnalizer analizer = new HistoCostAnalizer(geneticAlgorithm, queenNumber, sampleSize);
-		
+
 		TreeMap<Integer, Integer> results = analizer.analize();
-        
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        for(Integer value : results.keySet()) {
-        	series.getData().add(new XYChart.Data<String, Number>(value.toString(), results.get(value)));
-        }
-        
-        GeneticAlgorithmChart.getData().add(series);
+
+		XYChart.Series<String, Number> series = new XYChart.Series<>();
+		for (Integer value : results.keySet()) {
+			series.getData().add(new XYChart.Data<String, Number>(value.toString(), results.get(value)));
+		}
+
+		GeneticAlgorithmChart.getData().add(series);
 	}
 
 }

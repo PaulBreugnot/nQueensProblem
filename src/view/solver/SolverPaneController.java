@@ -72,6 +72,8 @@ public class SolverPaneController {
 		sizeSpinner.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> v, Number oldVal, Number newVal) {
+				ChessboardPane.getChildren().removeAll(queens);
+				MainApp.setState(null);
 				displayChessBoard((int) newVal, ChessboardPane.getWidth(), ChessboardPane.getHeight());
 			}
 		});

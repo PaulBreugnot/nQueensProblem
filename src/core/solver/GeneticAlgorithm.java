@@ -32,8 +32,16 @@ public class GeneticAlgorithm implements Solver {
 		this.populationSize = populationSize;
 	}
 
+	public int getPopulationSize() {
+		return populationSize;
+	}
+	
 	public void setMu(double mu) {
 		this.mu = mu;
+	}
+	
+	public double getMu() {
+		return mu;
 	}
 
 	public void setMaxIteration(int maxIteration) {

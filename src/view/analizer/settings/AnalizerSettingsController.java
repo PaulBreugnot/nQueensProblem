@@ -45,6 +45,12 @@ public class AnalizerSettingsController {
 	
 	public void setAnalizerPaneController(AnalizerPaneController analizerPaneController) {
 		this.analizerPaneController = analizerPaneController;
+		queenNumberSpinner.getValueFactory().setValue(new Integer(analizerPaneController.getQueenNumber()));
+		sampleSizeSpinner.getValueFactory().setValue(new Integer(analizerPaneController.getSampleSize()));
+		maxIterationSpinner.getValueFactory().setValue(new Integer(analizerPaneController.getHillClimbing().getMaxIteration()));
+		historicSizeSpinner.getValueFactory().setValue(new Integer(analizerPaneController.getTabooHillClimbing().getHistoricSize()));
+		populationSizeSpinner.getValueFactory().setValue(new Integer(analizerPaneController.getGeneticAlgorithm().getPopulationSize()));
+		muSpinner.getValueFactory().setValue(new Double(analizerPaneController.getGeneticAlgorithm().getMu()));
 	}
 	
 	public void setStage(Stage stage) {
@@ -62,7 +68,7 @@ public class AnalizerSettingsController {
 	}
 	
 	private void setSampleSizeSpinner() {
-		sampleSizeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(100, 10000, 100));
+		sampleSizeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(20, 10000, 100));
 		sampleSizeSpinner.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> v, Number oldVal, Number newVal) {
