@@ -1,15 +1,25 @@
-package solver;
+package core.solver;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
-import problem.Action;
-import problem.State;
+import core.problem.Action;
+import core.problem.State;
 
 public class TabooHillClimbing implements Solver {
+	
+	private static final int defaultHistoricSize = 30;
+	private static final int defaultTlimite = 100;
+	
+	private int Tlimite;
 
 	private ArrayBlockingQueue<State> historic;
+	
+	public TabooHillClimbing() {
+		this(defaultTlimite, defaultHistoricSize);
+	}
 
-	public TabooHillClimbing(int historicSize) {
+	public TabooHillClimbing(int Tlimite, int historicSize) {
+		this.Tlimite = Tlimite;
 		historic = new ArrayBlockingQueue<State>(historicSize);
 	}
 
@@ -19,7 +29,8 @@ public class TabooHillClimbing implements Solver {
 		int bestCost = Integer.MAX_VALUE;
 		boolean existingBetterNeighbour = true;
 
-		while (existingBetterNeighbour) {
+		int t = 0;
+		while (existingBetterNeighbour && t < Tlimite) {
 			existingBetterNeighbour = false;
 			State bestNeighbour = null;
 			for (Action action : Action.availableActions(currentState)) {
@@ -40,8 +51,14 @@ public class TabooHillClimbing implements Solver {
 			if (bestNeighbour != null) {
 				currentState = bestNeighbour;
 			}
+			t++;
 		}
 		return currentState;
+	}
+	
+	@Override
+	public String toString() {
+		return "Taboo Hill Climbing";
 	}
 
 }

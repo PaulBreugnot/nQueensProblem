@@ -1,9 +1,21 @@
-package solver;
+package core.solver;
 
-import problem.Action;
-import problem.State;
+import core.problem.Action;
+import core.problem.State;
 
 public class HillClimbing implements Solver {
+	
+	private static final int defaultTlimite = 100;
+	
+	private int Tlimite;
+	
+	public HillClimbing() {
+		this(defaultTlimite);
+	}
+	
+	public HillClimbing(int Tlimite) {
+		this.Tlimite = Tlimite;
+	}
 
 	@Override
 	public State solve(State initState) {
@@ -11,7 +23,8 @@ public class HillClimbing implements Solver {
 		int bestCost = Integer.MAX_VALUE;
 		boolean existingBetterNeighbour = true;
 
-		while (existingBetterNeighbour) {
+		int t = 0;
+		while (existingBetterNeighbour && t < Tlimite) {
 			existingBetterNeighbour = false;
 			State bestNeighbour = null;
 			for (Action action : Action.availableActions(currentState)) {
@@ -26,8 +39,14 @@ public class HillClimbing implements Solver {
 			if(bestNeighbour != null) {
 				currentState = bestNeighbour;
 			}
+			t++;
 		}
 		return currentState;
+	}
+	
+	@Override
+	public String toString() {
+		return "Hill Climbing";
 	}
 
 }

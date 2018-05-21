@@ -1,19 +1,28 @@
-package solver;
+package core.solver;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import core.problem.State;
+import core.util.Pair;
+
 import java.util.PriorityQueue;
 
-import problem.State;
-import util.Pair;
-
 public class GeneticAlgorithm implements Solver {
+	
+	private static final int defaultPopulationSize = 10;
+	private static final double defaultMu = 0.01;
+	private static final int defaultStepMax = 100;
 	
 	private int populationSize;
 	private double mu;
 	private PriorityQueue<State> population;
 	private int stepMax;
 
+	public GeneticAlgorithm(int queenNumber) {
+		this(queenNumber, defaultPopulationSize, defaultMu, defaultStepMax);
+	}
+	
 	public GeneticAlgorithm(int populationSize, double mu, PriorityQueue<State> population, int stepMax) {
 		this.populationSize = populationSize;
 		this.mu = mu;
@@ -115,6 +124,11 @@ public class GeneticAlgorithm implements Solver {
 			population.add(state);
 		}
 		return population;
+	}
+	
+	@Override
+	public String toString() {
+		return "Genetic Algorithm";
 	}
 
 }

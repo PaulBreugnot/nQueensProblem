@@ -1,14 +1,20 @@
-package solver;
+package core.solver;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import problem.Action;
-import problem.State;
+import core.problem.Action;
+import core.problem.State;
 
 public class SimulatedAnnealing implements Solver {
 
+	private static final int defaultTlimite = 100;
+	
 	private int Tlimite;
+	
+	public SimulatedAnnealing() {
+		this(defaultTlimite);
+	}
 	
 	public SimulatedAnnealing(int Tlimite) {
 		this.Tlimite = Tlimite;
@@ -39,4 +45,8 @@ public class SimulatedAnnealing implements Solver {
 		return currentState;
 	}
 
+	@Override
+	public String toString() {
+		return "Simulated Annealing";
+	}
 }

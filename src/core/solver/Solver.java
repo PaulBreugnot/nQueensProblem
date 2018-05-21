@@ -1,6 +1,6 @@
-package solver;
+package core.solver;
 
-import problem.State;
+import core.problem.State;
 
 public interface Solver {
 

@@ -1,16 +1,23 @@
-package solver;
+package core.solver;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 
-import problem.Action;
-import problem.State;
+import core.problem.Action;
+import core.problem.State;
 
 public class TabooSimulatedAnnealing implements Solver {
+	
+	private static final int defaultTlimite = 100;
+	private static final int defaultHistoricSize = 30;
 
 	private int Tlimite;
 	private ArrayBlockingQueue<State> historic;
+	
+	public TabooSimulatedAnnealing () {
+		this(defaultTlimite, defaultHistoricSize);
+	}
 
 	public TabooSimulatedAnnealing(int Tlimite, int historicSize) {
 		this.Tlimite = Tlimite;
@@ -47,6 +54,11 @@ public class TabooSimulatedAnnealing implements Solver {
 			t++;
 		}
 		return currentState;
+	}
+	
+	@Override
+	public String toString() {
+		return "Taboo Simulated Annealing";
 	}
 
 }

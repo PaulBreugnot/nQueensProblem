@@ -1,4 +1,4 @@
-package util;
+package core.util;
 
 public class Pair<K,V> {
 
